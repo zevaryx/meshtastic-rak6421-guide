@@ -57,7 +57,7 @@ The RAK6421 WisMesh Pi HAT is the hardware integration layer for Raspberry Pi Me
 
 To assemble the board on top of Raspberry Pi:
 - Mount modules/sensors to the HAT first and secure with screws
-- Connect antennas before mounting the HAT
+- If you have a LoRa radio module connected to IO slot 1 or slot 2, connect the antennas before mounting the HAT to the Pi.
 - Keep host powered off and unplugged during assembly
 - Use spacers to keep proper distance/alignment between boards
 
