@@ -73,11 +73,7 @@ The RAK6421 WisBlock Pi HAT provides **2 IO slots** and **4 sensor slots**:
 > **Note:** Slot pin layouts differ. See the [RAK6421 WisBlock Pi HAT Datasheet](https://docs.rakwireless.com/product-categories/wishat/rak6421-wisblock-pi-hat/datasheet/#schematics).
 
 ### Meshtasticd-Supported WisBlock Modules
-> **Compatibility note:** This document targets **meshtasticd 2.7.15 only**. RAK1906 and RAK1901 sensors are not yet fully supported in this version. Before starting, run:
-> `sudo cp /etc/meshtasticd/available.d/lora-RAK6421-13300-slot1.yaml /etc/meshtasticd/config.d/`
->
-> The examples use **RAK12019** as reference hardware (supported in 2.7.15). The guide will be updated once Meshtasticd adds full RAK1906/RAK1901 support.
-The following WisBlock modules have been tested and work with meshtasticd (as of version 2.7.17). We will update this list as new versions are released:
+> **Compatibility note:** This document targets **meshtasticd 2.7.20**.  The following WisBlock modules have been tested and work with meshtasticd (as of version 2.7.20). We will update this list as new versions are released:
 
 | RAK Name   | Chip / Component   | Measures              | Status  |
 |------------|--------------------|-----------------------|---------|
@@ -87,13 +83,11 @@ The following WisBlock modules have been tested and work with meshtasticd (as of
 | RAK12003   | Melexis MLX90632   | IR Temperature        | Yes     |
 | RAK12019   | Lite On LTR-390UV-01 | UV sensor           | Yes     |
 | RAK12020   | AMS TSL25911FN     | Ambient light         | Yes     |
-| RAK12034   | BMX160             | 9-axis Accelerometer  | Yes     |
 | RAK12037   | Sensirion SCD30    | CO2                   | PR ongoing |
-| RAK12500   | u-blox ZOE-M8Q     | GNSS GPS Location         | Yes |
 | RAK12501   | Quectel L76K   |  GNSS GPS Location         | Yes |
-| RAK1902    | STMicro LPS22HB    | Barometric Pressure   | Release soon     |
-| RAK1901    | Sensirion SHTC3   | Temp, Humidity   | Release soon    |
-| RAK1906    | BME680             | Temperature, Humidity, Pressure, VOC gas sensing | Release soon     |
+| RAK1902    | STMicro LPS22HB    | Barometric Pressure   | Yes   |
+| RAK1901    | Sensirion SHTC3   | Temp, Humidity   | Yes |
+| RAK1906    | BME680             | Temperature, Humidity, Pressure, VOC gas sensing | Yes  |
 
 ### HAT EEPROM Auto-Discovery
 
@@ -543,5 +537,4 @@ setup/scripts/check-services.sh
 - [Meshtastic Position Configuration](https://meshtastic.org/docs/configuration/radio/position/)
 - [Meshtastic Telemetry Configuration](https://meshtastic.org/docs/configuration/module/telemetry/)
 - [meshtasticd MQTT Configuration](https://meshtastic.org/docs/configuration/module/mqtt/)
-
 
