@@ -67,7 +67,7 @@ To assemble the board on top of Raspberry Pi:
 
 The RAK6421 WisBlock Pi HAT provides **2 IO slots** and **4 sensor slots**:
 - **IO Slots (1 & 2):** LoRa radio modules such as **RAK13300** or **RAK13302**
-- **Sensor Slot A:** larger slot for **RAK12501** / **RAK12500** GNSS module
+- **Sensor Slot A:** larger slot for **RAK12501** GNSS module
 - **Sensor Slots B/C/D:** environmental sensors such as **RAK1901**, **RAK1906**
 
 > **Note:** Slot pin layouts differ. See the [RAK6421 WisBlock Pi HAT Datasheet](https://docs.rakwireless.com/product-categories/wishat/rak6421-wisblock-pi-hat/datasheet/#schematics).
@@ -75,19 +75,19 @@ The RAK6421 WisBlock Pi HAT provides **2 IO slots** and **4 sensor slots**:
 ### Meshtasticd-Supported WisBlock Modules
 > **Compatibility note:** This document targets **meshtasticd 2.7.20**.  The following WisBlock modules have been tested and work with meshtasticd (as of version 2.7.20). We will update this list as new versions are released:
 
-| RAK Name   | Chip / Component   | Measures              | Status  |
-|------------|--------------------|-----------------------|---------|
-| RAK13000   | Semtech SX1262  | LoRa module            | Yes     |
-| RAK13002   | Semtech SX1262, SKY66122 signal booster | LoRa module           | Yes     |
-| RAK12002   | Micro Crystal RV-3028-C7 | RTC             | Yes     |
-| RAK12003   | Melexis MLX90632   | IR Temperature        | Yes     |
-| RAK12019   | Lite On LTR-390UV-01 | UV sensor           | Yes     |
-| RAK12020   | AMS TSL25911FN     | Ambient light         | Yes     |
-| RAK12037   | Sensirion SCD30    | CO2                   | PR ongoing |
-| RAK12501   | Quectel L76K   |  GNSS GPS Location         | Yes |
-| RAK1902    | STMicro LPS22HB    | Barometric Pressure   | Yes   |
-| RAK1901    | Sensirion SHTC3   | Temp, Humidity   | Yes |
-| RAK1906    | BME680             | Temperature, Humidity, Pressure, VOC gas sensing | Yes  |
+| RAK Name   | Chip / Component   | slot | Measures              | Status  |
+|------------|--------------------|-----------------------|---------|---------|
+| RAK13000   | Semtech SX1262  | IO slots (1 &2) | LoRa module            | Yes     |
+| RAK13002   | Semtech SX1262, SKY66122 signal booster | IO slots (1 &2) | LoRa module           | Yes     |
+| RAK12002   | Micro Crystal RV-3028-C7 | Sensor slot B/C/D | RTC             | Yes     |
+| RAK12003   | Melexis MLX90632   | Sensor slot B/C/D | IR Temperature        | Yes     |
+| RAK12019   | Lite On LTR-390UV-01 | Sensor slot B/C/D | UV sensor           | Yes     |
+| RAK12020   | AMS TSL25911FN     | Sensor slot B/C/D | Ambient light         | Yes     |
+| RAK12037   | Sensirion SCD30    | IO slot 2 only | CO2                   | PR ongoing |
+| RAK12501   | Quectel L76K   | Sensor slot A |  GNSS GPS Location         | Yes |
+| RAK1902    | STMicro LPS22HB    | Sensor slot B/C/D | Barometric Pressure   | Yes   |
+| RAK1901    | Sensirion SHTC3   | Sensor slot B/C/D | Temp, Humidity   | Yes |
+| RAK1906    | BME680             | Sensor slot B/C/D | Temperature, Humidity, Pressure, VOC gas sensing | Yes  |
 
 ### HAT EEPROM Auto-Discovery
 
