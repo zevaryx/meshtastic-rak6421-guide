@@ -106,8 +106,8 @@ The RAK6421 WisBlock Pi HAT provides **2 IO slots** and **4 sensor slots**:
 
 | RAK Name   | Chip / Component   | slot | Measures              | Status  |
 |------------|--------------------|-----------------------|---------|---------|
-| RAK13000   | Semtech SX1262  | IO slots (1 &2) | LoRa module            | Yes     |
-| RAK13002   | Semtech SX1262, SKY66122 signal booster | IO slots (1 &2) | LoRa module           | Yes     |
+| RAK13300   | Semtech SX1262  | IO slots (1 &2) | LoRa module            | Yes     |
+| RAK13302   | Semtech SX1262, SKY66122 signal booster | IO slots (1 &2) | LoRa module           | Yes     |
 | RAK12002   | Micro Crystal RV-3028-C7 | Sensor slot B/C/D | RTC             | Yes     |
 | RAK12003   | Melexis MLX90632   | Sensor slot B/C/D | IR Temperature        | Yes     |
 | RAK12019   | Lite On LTR-390UV-01 | Sensor slot B/C/D | UV sensor           | Yes     |
