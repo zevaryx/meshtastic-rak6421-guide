@@ -11,7 +11,7 @@
         "type": "mqtt in",
         "z": "meshtastic-flow",
         "name": "MQTT JSON Input",
-        "topic": "msh/2/json/#",
+        "topic": "msh/+/2/json/#",
         "qos": "2",
         "datatype": "json",
         "broker": "mqtt-broker-local",
@@ -201,7 +201,7 @@
         "type": "comment",
         "z": "meshtastic-flow",
         "name": "Meshtastic MQTT to InfluxDB",
-        "info": "## Data Flow Description\n\n1. MQTT Input subscribes to `msh/2/json/#` topic\n2. Parse function parses JSON and converts to InfluxDB format\n3. Switch node filters valid data\n4. Valid data is written to InfluxDB\n\n## Configuration Steps\n\n1. Double-click MQTT Broker node, configure connection to localhost:1883\n2. Double-click InfluxDB node, configure connection info\n3. Add your node ID mappings in Parse function\n4. Deploy and test",
+        "info": "## Data Flow Description\n\n1. MQTT Input subscribes to `msh/+/2/json/#` topic\n2. Parse function parses JSON and converts to InfluxDB format\n3. Switch node filters valid data\n4. Valid data is written to InfluxDB\n\n## Configuration Steps\n\n1. Double-click MQTT Broker node, configure connection to localhost:1883\n2. Double-click InfluxDB node, configure connection info\n3. Add your node ID mappings in Parse function\n4. Deploy and test",
         "x": 170,
         "y": 40,
         "wires": []

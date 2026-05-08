@@ -12,7 +12,8 @@ Transform your Raspberry Pi 4B/5 + RAK 6421 WisMesh Pi HAT + RAK Wisblock sensor
 - [📖 What This Guide Provides](#-what-this-guide-provides)
 - [1. Hardware Preparation](#1-hardware-preparation)
 - [2. Software Preparation](#2-software-preparation)
-- [3. Quick Start - Use Meshtastic Web Client](#3-quick-start---use-meshtastic-web-client) ⭐ **Start here!**
+- [3. Quick Start - Use Meshtastic Web Client](#3-quick-start---use-meshtastic-web-client) ⭐ **Start here!**  
+  - [Power on and network access (RAK Pi OS image)](#power-on-and-network-access-rak-pi-os-image)
 
 ### For Advanced Users (Optional)
 - [4. Advanced Setup - Add Visualization Dashboard](#4-advanced-setup---add-visualization-dashboard-optional)
@@ -21,6 +22,7 @@ Transform your Raspberry Pi 4B/5 + RAK 6421 WisMesh Pi HAT + RAK Wisblock sensor
 - [5. Post-Installation Configuration](#5-post-installation-configuration)
 - [6. Verify Installation](#6-verify-installation)
 - [7. Troubleshooting](#7-troubleshooting)
+  - [Frequently asked questions (FAQ)](#frequently-asked-questions-faq)
 
 ---
 
@@ -154,6 +156,9 @@ Use the dedicated [Meshtastic firmware from RAKwireless](https://github.com/RAKW
 - Optimized for Raspberry Pi 4/5
 - Based on [pi-gen](https://github.com/RPi-Distro/pi-gen)
 
+> **Default login (RAK Pi OS image)**  
+> The pre-built image uses the account **`rak`** with default password **`changeme`**. You will be prompted to change this password on first login. Pick a strong password and keep it somewhere safe.
+
 > 💡 **This is the easiest option** - flash the image, boot, and start using Meshtastic immediately via web client.
 
 **Alternative Options (For Advanced Users)**
@@ -169,28 +174,54 @@ Use the dedicated [Meshtastic firmware from RAKwireless](https://github.com/RAKW
 
 > ✅ **The standard RAKwireless firmware includes meshtasticd service** - it's already running when you boot!
 
-### Connect via Web Client
+### Before you start
 
-**Before You Start:**
 1. Flash the [Meshtastic firmware from RAKwireless](https://github.com/RAKWireless/meshtastic-rak6421-guide/releases) to your SD card
 2. Assemble the RAK6421 HAT with LoRa radio (RAK13300/RAK13302) and sensors
 3. **Important:** Connect the antenna to the LoRa radio before powering on
 4. Insert SD card, power on your Raspberry Pi
 
-**Step 1: Find Your Pi's IP Address**
+### Power on and network access (RAK Pi OS image)
+
+The RAKwireless image can reach your LAN over Ethernet or Wi-Fi. How you power it on determines which path applies.
+
+**Wired (Ethernet)**
+
+- The image runs **DHCP on Ethernet** by default. Connect the Raspberry Pi to your router with a cable, then open your router’s admin page and find the DHCP lease / client list for the device.
+- If you are validating the stack over Ethernet in the lab, you can **skip Wi-Fi setup** and go straight to [Step 2: Open Meshtastic Web Client](#step-2-open-meshtastic-web-client) once you know the IP address.
+
+**Wireless (Wi-Fi and the configuration hotspot)**
+
+- If you are **not** using Ethernet, power the board with a suitable power supply (official or adequate DC supply for your Pi model).
+- When the Meshtastic station has **no working network** (no Ethernet link **and** no Wi-Fi client connection), the firmware starts a temporary **Configuration access point** so you can join it from a PC or phone and enter your Wi‑Fi credentials.
+
+**Connecting to the configuration hotspot**
+
+- The hotspot is **only for initial setup**. After the station joins your Wi‑Fi or uses Ethernet, the configuration AP **stops** broadcasting.
+- **SSID:** `RAK_XXXX`, where **`XXXX`** is the **last four characters** of the device’s MAC address (hex digits).
+- **Password:** `rakwireless`
+
+> **Note (Windows 10/11)**  
+> The Wi‑Fi dialog may default to **“Enter a PIN”** (WPS). The configuration hotspot uses **WPA2 with a passphrase**, not WPS. An eight‑digit WPS PIN is **not** the network password. To connect successfully, choose **“Connect using a security key”** / **“Enter the network security key”** (wording varies by build) and type **`rakwireless`**. Do **not** use the WPS PIN field for this network.
+
+After the station is on your LAN, continue with the steps below.
+
+### Open the Meshtastic web client
+
+#### Step 1: Find Your Pi's IP Address
 
 Check your router's DHCP client list, or connect a monitor/keyboard to the Pi and run:
 ```bash
 hostname -I
 ```
 
-**Step 2: Open Meshtastic Web Client**
+#### Step 2: Open Meshtastic Web Client
 
 From any device on the same network, open: `https://<Pi-IP>:9443`
 
 Example: `https://192.168.1.100:9443`
 
-**Step 3: Connect to Your Node**
+#### Step 3: Connect to Your Node
 
 1. Click **"+ New Connection"**
 
@@ -204,7 +235,7 @@ Example: `https://192.168.1.100:9443`
 
    ![Meshtastic Web Client - Radio Config](assets/meshtastic_web_client_radio_config.png)
 
-**Step 4: Start Using Meshtastic!**
+#### Step 4: Start Using Meshtastic!
 
 You can now:
 - Configure your node name and settings
@@ -221,7 +252,7 @@ Download the Meshtastic app on iOS or Android, then connect using the Pi's IP ad
 
 #### Option B: Meshtastic Python CLI
 
-SSH into your Pi and use the meshtastic python cli, for example:
+SSH into your Pi (see [FAQ](#frequently-asked-questions-faq) if SSH is not enabled yet) and use the meshtastic python cli, for example:
 
 ```bash
 meshtastic --info
@@ -517,6 +548,17 @@ Access these services from any device on your LAN using `http://<Pi-IP>:<port>`,
 ---
 
 ## 7. Troubleshooting
+
+### Frequently asked questions (FAQ)
+
+**I changed the LoRa region in the Meshtastic web UI and now I see odd behavior (for example I can send packets but not receive).**  
+Try **restarting the device** (power-cycle the Raspberry Pi or reboot from the terminal). Region and radio timing changes sometimes need a full restart to apply cleanly.
+
+**The time shown in the Meshtastic web UI is wrong.**  
+Connect your **Wismesh station* (including **Raspberry Pi 4**) to a network over **Ethernet or Wi‑Fi** so the operating system can synchronize the clock from **NTP** time servers. After the system time is correct, refresh the web client; the displayed time should match.
+
+**I want to use SSH, but it is not available.**  
+On the current RAK Pi OS image, **SSH is not enabled by default**. Connect a **display and keyboard**, log in locally, and run `sudo raspi-config`, then enable SSH under the interface options. **A future image release is planned to ship with SSH enabled by default;** until then, use `raspi-config` after first boot.
 
 ### No MQTT Messages?
 
