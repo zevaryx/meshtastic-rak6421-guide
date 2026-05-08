@@ -555,7 +555,7 @@ Access these services from any device on your LAN using `http://<Pi-IP>:<port>`,
 Try **restarting the device** (power-cycle the Raspberry Pi or reboot from the terminal). Region and radio timing changes sometimes need a full restart to apply cleanly.
 
 **The time shown in the Meshtastic web UI is wrong.**  
-Connect your **Wismesh station* (including **Raspberry Pi 4**) to a network over **Ethernet or Wi‑Fi** so the operating system can synchronize the clock from **NTP** time servers. After the system time is correct, refresh the web client; the displayed time should match.
+Connect your *WisMesh station* (including **Raspberry Pi 4**) to a network over **Ethernet or Wi‑Fi** so the operating system can synchronize the clock from **NTP** time servers. After the system time is correct, refresh the web client; the displayed time should match.
 
 **I want to use SSH, but it is not available.**  
 On the current RAK Pi OS image, **SSH is not enabled by default**. Connect a **display and keyboard**, log in locally, and run `sudo raspi-config`, then enable SSH under the interface options. **A future image release is planned to ship with SSH enabled by default;** until then, use `raspi-config` after first boot.
