@@ -50,6 +50,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
     echo "  --skip-config  Skip telemetry configuration"
     echo ""
     echo "This script installs all components in order:"
+    echo "  0. Install meshtastic-cli"
     echo "  1. Configure Serial Port (for GPS)"
     echo "  2. Mosquitto MQTT Broker"
     echo "  3. Telemetry & MQTT Configuration"
@@ -123,31 +124,34 @@ run_step() {
     fi
 }
 
-# Step 1: Configure serial port for GPS module
+# Step 1: Install meshtastic-cli
+run_step 1 "Install meshtastic-cli" "01-install-meshtastic-cli.sh"
+
+# Step 2: Configure serial port for GPS module
 if [ "$SKIP_SERIAL" = false ]; then
-    run_step 1 "Configure Serial Port" "01-configure-serial.sh"
+    run_step 2 "Configure Serial Port" "01-configure-serial.sh"
 else
-    echo -e "${YELLOW}Skipping Step 1: Configure Serial Port${NC}"
+    echo -e "${YELLOW}Skipping Step 2: Configure Serial Port${NC}"
 fi
 
-# Step 2: Install Mosquitto
-run_step 2 "Install Mosquitto MQTT Broker" "02-install-mosquitto.sh"
+# Step 3: Install Mosquitto
+run_step 3 "Install Mosquitto MQTT Broker" "03-install-mosquitto.sh"
 
-# Step 3: Configure Telemetry
+# Step 4: Configure Telemetry
 if [ "$SKIP_CONFIG" = false ]; then
-    run_step 3 "Configure Telemetry & MQTT" "03-configure-telemetry.sh"
+    run_step 4 "Configure Telemetry & MQTT" "04-configure-telemetry.sh"
 else
     echo -e "${YELLOW}Skipping Step 3: Telemetry Configuration${NC}"
 fi
 
-# Step 4: Install InfluxDB
-run_step 4 "Install InfluxDB" "04-install-influxdb.sh"
+# Step 5: Install InfluxDB
+run_step 5 "Install InfluxDB" "05-install-influxdb.sh"
 
-# Step 5: Install Node-RED
-run_step 5 "Install Node-RED" "05-install-nodered.sh"
+# Step 6: Install Node-RED
+run_step 6 "Install Node-RED" "06-install-nodered.sh"
 
-# Step 6: Install Grafana
-run_step 6 "Install Grafana" "06-install-grafana.sh"
+# Step 7: Install Grafana
+run_step 7 "Install Grafana" "07-install-grafana.sh"
 
 # Calculate elapsed time
 END_TIME=$(date +%s)

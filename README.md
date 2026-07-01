@@ -313,11 +313,12 @@ cd setup/scripts
 This script installs all components in the correct order and takes approximately 20-30 minutes (depending on your network speed).
 
 **What Gets Installed:**
-1. Mosquitto MQTT Broker (for message routing)
-2. Configure telemetry settings
-3. InfluxDB (time-series database)
-4. Node-RED (data processing)
-5. Grafana (visualization dashboard)
+1. Meshtastic CLI
+2. Mosquitto MQTT Broker (for message routing)
+3. Configure telemetry settings
+4. InfluxDB (time-series database)
+5. Node-RED (data processing)
+6. Grafana (visualization dashboard)
 
 > **Tip:** Before running the installation, you can customize credentials in `setup/config/credentials.env`
 
@@ -348,10 +349,18 @@ cd setup/scripts
 
 Each script can be run independently. The scripts install their own dependencies, so you can run any step by itself if needed.
 
-#### Step 1: Configure Serial Port (Optional)
+#### Step 1: Meshtastic CLI
 
 ```bash
-./01-configure-serial.sh
+./01-install-meshtastic-cli.sh
+```
+
+This install `pipx` and `meshtastic-cli` for future steps to use for configuring the radio
+
+#### Step 2: Configure Serial Port (Optional)
+
+```bash
+./02-configure-serial.sh
 ```
 
 This configures the serial port for the Meshtastic GPS module (UART enabled, serial console disabled) and also updates `/etc/meshtasticd/config.yaml` by **uncommenting** common required lines (only if they are currently commented), including:
@@ -369,20 +378,20 @@ A reboot is required for changes to take effect.
 
 If you'd rather make these edits yourself, see [`config.yaml`](./config.yaml) in this repository for an example configuration.
 
-#### Step 2: Install Mosquitto MQTT Broker
+#### Step 3: Install Mosquitto MQTT Broker
 
 ```bash
-./02-install-mosquitto.sh
+./03-install-mosquitto.sh
 ```
 
 The MQTT broker receives messages from meshtasticd on port 1883.
 
 > **Note:** Install the MQTT broker first before configuring telemetry settings. The Meshtastic device needs a working MQTT broker connection to successfully apply MQTT-related configurations.
 
-#### Step 3: Configure Telemetry & MQTT
+#### Step 4: Configure Telemetry & MQTT
 
 ```bash
-./03-configure-telemetry.sh
+./04-configure-telemetry.sh
 ```
 
 This script will use the Meshtastic Python CLI to configure:
@@ -399,10 +408,10 @@ This script will use the Meshtastic Python CLI to configure:
 - **Telemetry:** enable environment measurement and set update interval as needed
 - **Position:** set GPS mode and position broadcast options as needed 
 
-#### Step 4: Install InfluxDB
+#### Step 5: Install InfluxDB
 
 ```bash
-./04-install-influxdb.sh
+./05-install-influxdb.sh
 ```
 
 This script installs InfluxDB as a system service, creates the organization and bucket for Meshtastic data, and configures the admin account. Node-RED will write telemetry to this database; Grafana will read from it.
@@ -417,20 +426,20 @@ Default configuration:
 
 > **Note:** You can customize these in `config/credentials.env` before installation.
 
-#### Step 5: Install Node-RED
+#### Step 6: Install Node-RED
 
 ```bash
-./05-install-nodered.sh
+./06-install-nodered.sh
 ```
 
 This script installs Node.js (20 LTS) and Node-RED using the official installer, applies the project's custom [settings.js](setup/nodered/settings.js), and enables the Node-RED system service. After installation you will configure the InfluxDB token in Node-RED (see [Section 5: Post-Installation Configuration](#5-post-installation-configuration)).
 
 > **Important:** This step takes 20-30 minutes on slower Pi models.
 
-#### Step 6: Install Grafana
+#### Step 8: Install Grafana
 
 ```bash
-./06-install-grafana.sh
+./08-install-grafana.sh
 ```
 
 This script adds the Grafana APT repository, installs Grafana, enables the service, and provisions the InfluxDB data source. A pre-configured dashboard is deployed so you can view Meshtastic data without manual setup: it displays **environment telemetry** (temperature, humidity, pressure, air quality / IAQ, light and UV) and **GPS/position** (satellite count, PDOP, track, and map). After installation, open **Dashboards** → **Meshtastic** → **Meshtastic Environment Monitor** in Grafana. The dashboard definition is in [setup/grafana/dashboard.json](setup/grafana/dashboard.json) if you want to customize or inspect it.
